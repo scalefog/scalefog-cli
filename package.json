@@ -1,0 +1,15 @@
+{
+  "name": "scf",
+  "version": "1.0.0",
+  "description": "Cli for scalefog",
+  "main": "./bin/scf.js",
+  "bin": "./bin/scf.js",
+  "preferGlobal": true,
+  "author": "Kenneth Iversen",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^2.9.0",
+    "prompt": "^1.0.0",
+    "request": "^2.85.0"
+  }
+}
