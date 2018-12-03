@@ -1,6 +1,7 @@
 const config = require("./cliconf");
 const user = require("./user");
 const request = require("request");
+const AsciiTable = require('ascii-table');
 const exec = require("child_process").exec;
 var fs = require("fs"),
   exists = fs.existsSync || path.existsSync,
@@ -102,10 +103,14 @@ var list = function () {
         if (body.message) {
           console.log(body.message);
         } else {
+          var instanceList = new AsciiTable('Your apps');
+          instanceList.setHeading('App name', 'Url');
           var instances = body.DATA;
           for (var i = 0, len = instances.length; i < len; i++) {
-            console.log(instances[i].name);
+            //console.log(instances[i].name);
+            instanceList.addRow(instances[i].name, 'https://' + instances[i].name + '.scf.sh');
           }
+          console.log(instanceList.toString());
         }
       }
     );
