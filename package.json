@@ -1,16 +1,22 @@
 {
-  "name": "scf",
-  "version": "1.0.0",
-  "description": "Cli for scalefog",
+  "name": "scalefog",
+  "version": "1.0.1",
+  "description": "Scalefog command line interface",
   "main": "./bin/scf.js",
-  "bin": "./bin/scf.js",
-  "preferGlobal": true,
-  "author": "Kenneth Iversen",
-  "license": "ISC",
+  "bin": {
+    "scf": "./bin/scf.js"
+  },
+  "repository": "git://github.com/scalefog/scalefog-cli.git",
   "dependencies": {
-    "ascii-table": "0.0.9",
-    "commander": "^2.9.0",
+    "ascii-table": "^0.0.9",
+    "commander": "^2.19.0",
     "prompt": "^1.0.0",
-    "request": "^2.85.0"
-  }
+    "scalefog-api": "^1.0.0"
+  },
+  "bugs": {
+    "url": "https://github.com/scalefog/scalefog-cli/issues"
+  },
+  "devDependencies": {},
+  "author": "Kenneth Iversen",
+  "license": "ISC"
 }
