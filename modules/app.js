@@ -1,4 +1,7 @@
 const Node = require("scalefog-api").scalefog,
+    fs = require("fs"),
+    exists = fs.existsSync || path.existsSync,
+    path = require("path"),
     user = require("./user"),
     nodeapi = new Node();
 const AsciiTable = require('ascii-table');
@@ -17,6 +20,12 @@ const create = function (appname, region = '') {
         nodeapi.CreateInstance(appname, region, result => {
             if (result.success == true) {
                 console.log("Creating " + appname + "... done");
+                console.log(body.app_url + " | " + body.repo);
+                if (exists(".git")) {
+                    exec("git remote add scalefog " + body.repo);
+                    console.log("Git remote scalefog added");
+                }
+
             } else {
                 console.log(result.message);
             }

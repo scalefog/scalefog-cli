@@ -103,6 +103,7 @@ function login() {
                 authenticate(result.username, result.password).then((token) => {
                     console.log("You are now logged in as " + result.username);
                     user.writeUser(token);
+                    keycheck();
                     updatekey(token);
                     resolve(token);
                 }).catch(err => {

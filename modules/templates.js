@@ -44,6 +44,18 @@ async function templates() {
     return templates;
 }
 
+function determineDefaultTemplate() {
+    if (fs.existsSync("./package.json")) {
+        return `node-minimal`;
+    } else if (anyFilesExist(["./index.html", "./index.htm"])) {
+        return `nginx-static`;
+    } else if (anyFilesExist(["./index.php"])) {
+        return `php-apache-minimal`;
+    }
+
+    return undefined;
+}
+
 function getTemplateFile(template, filename) {
     return new Promise((resolve, reject) => {
 
@@ -88,6 +100,17 @@ module.exports = async function (operation, options = {}) {
                 if (!template) {
                     if (options.name) {
                         throw new Error(`Invalid template name ${options.name}`)
+                    } else {
+                        const defaultTemplateName = determineDefaultTemplate()
+
+                        if (defaultTemplateName) {
+                            template = allTemplates.find(t => t.name === determineDefaultTemplate());
+                        } else {
+                            log.prettyPrint('Could not automatically find a template for this project. ' +
+                                'Available templates are listed below. ');
+
+                            return allTemplates.map(t => t.name);
+                        }
                     }
                 }
                 let dockerfile = await getTemplateFile(template, "Dockerfile");

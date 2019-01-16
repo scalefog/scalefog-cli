@@ -1,6 +1,6 @@
 {
   "name": "scalefog",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Scalefog command line interface",
   "main": "./bin/scf.js",
   "bin": {
