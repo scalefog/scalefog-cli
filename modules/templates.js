@@ -100,6 +100,7 @@ module.exports = async function (operation, options = {}) {
                 if (fs.existsSync("./Dockerfile")) {
                     throw new Error('A Dockerfile already exists. Make sure to remove it before applying a template.');
                 }
+                const allTemplates = await templates();
                 let template = await getTemplateByName(options.name);
                 if (!template) {
                     if (options.name) {
@@ -110,7 +111,7 @@ module.exports = async function (operation, options = {}) {
                         if (defaultTemplateName) {
                             template = allTemplates.find(t => t.name === determineDefaultTemplate());
                         } else {
-                            log.prettyPrint('Could not automatically find a template for this project. ' +
+                            console.log('Could not automatically find a template for this project. ' +
                                 'Available templates are listed below. ');
 
                             return allTemplates.map(t => t.name);

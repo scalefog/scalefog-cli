@@ -3,48 +3,55 @@ const Node = require("scalefog-api").scalefog,
     exists = fs.existsSync || path.existsSync,
     path = require("path"),
     user = require("./user"),
+    exec = require("child_process").exec,
     nodeapi = new Node();
-const AsciiTable = require('ascii-table');
+const AsciiTable = require("ascii-table");
 const regions = function () {
     nodeapi.get_regions(regions => {
-        var regionsList = new AsciiTable('Regions');
+        var regionsList = new AsciiTable("Regions");
         for (var i = 0, len = regions.length; i < len; i++) {
             regionsList.addRow(regions[i].name);
         }
         console.log(regionsList.toString());
     });
-}
-const create = function (appname, region = '') {
+};
+const create = function (appname, region = "") {
     if (user.getToken()) {
         nodeapi.setToken(user.getToken());
         nodeapi.CreateInstance(appname, region, result => {
-            if (result.success == true) {
+            if (result.success == "true") {
                 console.log("Creating " + appname + "... done");
                 console.log(result.app_url + " | " + result.repo);
                 if (exists(".git")) {
                     exec("git remote add scalefog " + result.repo);
                     console.log("Git remote scalefog added");
+                } else {
+                    exec("git init");
+                    exec("git remote add scalefog " + result.repo);
+                    console.log("Git remote scalefog added");
                 }
-
             } else {
                 console.log(result.message);
             }
         });
     }
-}
+};
 const list = function () {
     if (user.getToken()) {
         nodeapi.setToken(user.getToken());
         nodeapi.getInstances(instances => {
-            var instanceList = new AsciiTable('Your apps');
-            instanceList.setHeading('App name', 'Url');
+            var instanceList = new AsciiTable("Your apps");
+            instanceList.setHeading("App name", "Url");
             for (var i = 0, len = instances.length; i < len; i++) {
-                instanceList.addRow(instances[i].name, 'https://' + instances[i].name + '.scf.sh');
+                instanceList.addRow(
+                    instances[i].name,
+                    "https://" + instances[i].name + ".scf.sh"
+                );
             }
             console.log(instanceList.toString());
         });
     }
-}
+};
 const _delete = function (name) {
     if (user.getToken()) {
         nodeapi.setToken(user.getToken());

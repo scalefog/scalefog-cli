@@ -2,6 +2,8 @@ const auth = require("../modules/auth");
 const app = require("../modules/app");
 const templates = require("../modules/templates");
 const commander = require("commander");
+const packageJson = require("../package.json");
+commander.version(packageJson.version, "-v, --version");
 commander
     .command("login")
     .description("Login to your Scalefog account")
