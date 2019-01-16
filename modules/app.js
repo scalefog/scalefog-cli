@@ -20,9 +20,9 @@ const create = function (appname, region = '') {
         nodeapi.CreateInstance(appname, region, result => {
             if (result.success == true) {
                 console.log("Creating " + appname + "... done");
-                console.log(body.app_url + " | " + body.repo);
+                console.log(result.app_url + " | " + result.repo);
                 if (exists(".git")) {
-                    exec("git remote add scalefog " + body.repo);
+                    exec("git remote add scalefog " + result.repo);
                     console.log("Git remote scalefog added");
                 }
 

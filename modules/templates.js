@@ -44,6 +44,10 @@ async function templates() {
     return templates;
 }
 
+function anyFilesExist(listFiles) {
+    return listFiles.some(f => fs.existsSync(f));
+}
+
 function determineDefaultTemplate() {
     if (fs.existsSync("./package.json")) {
         return `node-minimal`;
